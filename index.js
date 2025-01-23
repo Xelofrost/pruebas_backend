@@ -30,6 +30,12 @@ app.get('/imagenes', (req, res) => {
 
     res.sendFile(__dirname + `/${imagenes[numeroAleatorio]}`);
 });
+
+app.get('/usuarios', (req, res) => {
+    const stmt = "SELECT * FROM usuarios";
+    const usuarios = db.prepare(stmt).all();
+    res.json(usuarios);
+});
     
     app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
