@@ -3,6 +3,9 @@ const db = require('./initdb');
 const geoip = require('geoip-lite');
 const app = express();
 const port = 3000;
+const morgan = require('morgan');
+
+app.use(morgan('combined'));
 
 app.get('/', (req, res) => {
     res.send('Hola Mundo');
@@ -15,9 +18,6 @@ app.get('/imagenes', (req, res) => {
     const Localizacion = geoip.lookup(ip);
     const insert = db.prepare("INSERT INTO usuarios (ip, userAgent, Localizacion, fecha) VALUES (?, ?, ?, ?)");
     insert.run(ip, userAgent, Localizacion.city, fecha);
-    console.log(ip);
-    console.log(userAgent);
-    console.log(fecha);
     const imagenes = [
         "1.jpg",
         "2.jpg",
