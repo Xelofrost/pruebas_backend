@@ -6,6 +6,10 @@ const fs = require('fs')
 const path = require('path');
 const port = 3000;
 const morgan = require('morgan');
+app.use(express.static('public'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 app.use(morgan('combined'));
 
@@ -41,6 +45,12 @@ app.get('/usuarios', (req, res) => {
     const stmt = "SELECT * FROM usuarios";
     const usuarios = db.prepare(stmt).all();
     res.json(usuarios);
+});
+
+app.post('/collect', (req, res) => {
+    const data = req.body;
+    console.log(data);
+    res.send(data);
 });
     
     app.listen(port, () => {
