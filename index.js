@@ -2,10 +2,16 @@ const express = require('express');
 const db = require('./initdb');
 const geoip = require('geoip-lite');
 const app = express();
+const fs = require('fs')
+const path = require('path');
 const port = 3000;
 const morgan = require('morgan');
 
 app.use(morgan('combined'));
+
+app.use(morgan('combined', {
+    stream: fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+  }))
 
 app.get('/', (req, res) => {
     res.send('Hola Mundo');
